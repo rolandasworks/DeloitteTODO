@@ -1,7 +1,7 @@
-﻿using DeloitteTODO.ApiModels;
-using DeloitteTODO.Data;
-using DeloitteTODO.Models;
-using DeloitteTODO.Services;
+﻿using DeloitteTODO.Domain.DTO;
+using DeloitteTODO.Domain.Entities;
+using DeloitteTODO.Domain.Interfaces;
+using DeloitteTODO.Domain.Services;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -13,7 +13,8 @@ namespace DeloitteTODO.UnitTest.Services
 {
     public class ToDoServiceTests
     {
-        private Mock<IApplicationDbContext> _applicationDbContext;
+
+        private Mock<IUnitOfWork> _unitOfWork;
         private ToDoData[] _todoArray;
 
         [SetUp]
@@ -21,31 +22,31 @@ namespace DeloitteTODO.UnitTest.Services
         {
             _todoArray = GetTodoData();
 
-            _applicationDbContext = new Mock<IApplicationDbContext>();
-            _applicationDbContext.Setup(r => r.GetByIdAsync<ToDoData>(1)).ReturnsAsync(_todoArray[0]);
-            _applicationDbContext.Setup(r => r.GetByIdAsync<ToDoData>(2)).ReturnsAsync(_todoArray[1]);
-            _applicationDbContext.Setup(r => r.GetByIdAsync<ToDoData>(3)).ReturnsAsync(_todoArray[2]);
-            _applicationDbContext.Setup(r => r.GetByIdAsync<ToDoData>(4)).ReturnsAsync(_todoArray[3]);
-            _applicationDbContext.Setup(r => r.ListAsync<ToDoData>()).ReturnsAsync(_todoArray.OfType<ToDoData>().ToList());
+            _unitOfWork = new Mock<IUnitOfWork>();
+
+            _unitOfWork.Setup(r => r.ToDoRepository.GetByIdAsync<ToDoData>(1)).ReturnsAsync(_todoArray[0]);
+            _unitOfWork.Setup(r => r.ToDoRepository.GetByIdAsync<ToDoData>(2)).ReturnsAsync(_todoArray[1]);
+            _unitOfWork.Setup(r => r.ToDoRepository.GetByIdAsync<ToDoData>(3)).ReturnsAsync(_todoArray[2]);
+            _unitOfWork.Setup(r => r.ToDoRepository.GetByIdAsync<ToDoData>(4)).ReturnsAsync(_todoArray[3]);
+            _unitOfWork.Setup(r => r.ToDoRepository.ListAsync<ToDoData>()).ReturnsAsync(_todoArray.OfType<ToDoData>().ToList());
         }
 
         [Test, TestCaseSource(typeof(ToDoItemList))]
         public void TestGetByIdAsync(ToDoItemDTO toDoItemDTO)
         {
-            var toDoService = new ToDoService(_applicationDbContext.Object);
-            var result = toDoService.GetByIdAsync(toDoItemDTO.Id);
+            var toDoService = new ToDoService(_unitOfWork.Object);
+            var result = toDoService.GetTodoById(toDoItemDTO.Id);
 
             Assert.AreEqual(result.Result.Id, toDoItemDTO.Id);
             Assert.AreEqual(result.Result.Describtion, toDoItemDTO.Describtion);
             Assert.AreEqual(result.Result.UserId, toDoItemDTO.UserId);
             Assert.AreEqual(result.Result.IsChecked, toDoItemDTO.IsChecked);
         }
-
         [Test]
         public void TestAsyncList_userid2()
         {
-            var toDoService = new ToDoService(_applicationDbContext.Object);
-            var result = toDoService.AsyncList("userid2");
+            var toDoService = new ToDoService(_unitOfWork.Object);
+            var result = toDoService.GetList("userid2");
 
             Assert.AreEqual(result.Result.Count, 2);
         }
@@ -53,8 +54,8 @@ namespace DeloitteTODO.UnitTest.Services
         [Test]
         public void AddAsync()
         {
-            var toDoService = new ToDoService(_applicationDbContext.Object);
-            var result = toDoService.AddAsync(_todoArray[0].ConvertObject());
+            var toDoService = new ToDoService(_unitOfWork.Object);
+            var result = toDoService.AddTodo(_todoArray[0].ConvertObject());
 
             Assert.IsTrue(result.Result);
         }
@@ -62,8 +63,8 @@ namespace DeloitteTODO.UnitTest.Services
         [Test]
         public void UpdateAsync()
         {
-            var toDoService = new ToDoService(_applicationDbContext.Object);
-            var result = toDoService.UpdateAsync(_todoArray[0].ConvertObject());
+            var toDoService = new ToDoService(_unitOfWork.Object);
+            var result = toDoService.UpdateTodo(_todoArray[0].ConvertObject());
 
             Assert.IsTrue(result.Result);
         }
@@ -71,8 +72,8 @@ namespace DeloitteTODO.UnitTest.Services
         [Test]
         public void DeleteAsync()
         {
-            var toDoService = new ToDoService(_applicationDbContext.Object);
-            var result = toDoService.DeleteAsync(_todoArray[0].ConvertObject());
+            var toDoService = new ToDoService(_unitOfWork.Object);
+            var result = toDoService.DeleteTodo(_todoArray[0].ConvertObject());
 
             Assert.IsTrue(result.Result);
         }
