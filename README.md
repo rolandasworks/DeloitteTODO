@@ -5,7 +5,7 @@
 
 Clean Architecture Design (Onion)
 
-Repositories, unit of work
+Repositories, Unit of work
 
 Code First Migration
 
