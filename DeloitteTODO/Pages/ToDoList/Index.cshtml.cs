@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using DeloitteTODO.ApiModels;
 using DeloitteTODO.Data;
-using DeloitteTODO.Services;
+using DeloitteTODO.Domain.DTO;
+using DeloitteTODO.Domain.Interfaces;
+using DeloitteTODO.Domain.Services;
 
 namespace DeloitteTODO.Pages.ToDoList
 {
@@ -24,7 +25,7 @@ namespace DeloitteTODO.Pages.ToDoList
 
         public async Task OnGetAsync()
         {
-            ToDoItemDTO = await _toDoService.AsyncList(HttpContext.User.Claims.First().Value); 
+            ToDoItemDTO = await _toDoService.GetList(HttpContext.User.Claims.First().Value); 
         }
     }
 }

@@ -15,4 +15,13 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DeloitteTODO.Domain\DeloitteTODO.Domain.csproj" />
+    <ProjectReference Include="..\DeloitteTODO.Infrastructure\DeloitteTODO.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

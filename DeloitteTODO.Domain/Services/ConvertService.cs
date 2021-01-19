@@ -1,11 +1,12 @@
-﻿using DeloitteTODO.ApiModels;
-using DeloitteTODO.Models;
+﻿using DeloitteTODO.Domain.DTO;
+using DeloitteTODO.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace DeloitteTODO.Services
+namespace DeloitteTODO.Domain.Services
 {
     public static class ConvertService
     {

@@ -1,6 +1,10 @@
 using DeloitteTODO.Data;
-using DeloitteTODO.Models;
-using DeloitteTODO.Services;
+using DeloitteTODO.Domain.Interfaces;
+using DeloitteTODO.Domain.Repositories;
+using DeloitteTODO.Domain.Services;
+using DeloitteTODO.Infrastructure;
+using DeloitteTODO.Infrastructure.Data;
+using DeloitteTODO.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +44,8 @@ namespace DeloitteTODO
 
             services.AddScoped<IToDoService, ToDoService>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IToDoRepository, ToDoRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddRazorPages();
 

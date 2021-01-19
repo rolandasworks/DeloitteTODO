@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using DeloitteTODO.ApiModels;
 using DeloitteTODO.Data;
-using DeloitteTODO.Services;
+using DeloitteTODO.Domain.DTO;
+using DeloitteTODO.Domain.Interfaces;
+using DeloitteTODO.Domain.Services;
 
 namespace DeloitteTODO.Pages.ToDoList
 {
@@ -30,7 +31,7 @@ namespace DeloitteTODO.Pages.ToDoList
                 return NotFound();
             }
 
-            ToDoItemDTO = await _toDoService.GetByIdAsync(id.Value);
+            ToDoItemDTO = await _toDoService.GetTodoById(id.Value);
 
             if (ToDoItemDTO == null)
             {
@@ -46,7 +47,7 @@ namespace DeloitteTODO.Pages.ToDoList
                 return NotFound();
             }
 
-            await _toDoService.DeleteAsync(ToDoItemDTO);
+            await _toDoService.DeleteTodo(ToDoItemDTO);
 
             return RedirectToPage("./Index");
         }

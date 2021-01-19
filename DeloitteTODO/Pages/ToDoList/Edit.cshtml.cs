@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DeloitteTODO.ApiModels;
 using DeloitteTODO.Data;
-using DeloitteTODO.Services;
+using DeloitteTODO.Domain.DTO;
+using DeloitteTODO.Domain.Interfaces;
+using DeloitteTODO.Domain.Services;
 
 namespace DeloitteTODO.Pages.ToDoList
 {
@@ -31,7 +32,7 @@ namespace DeloitteTODO.Pages.ToDoList
                 return NotFound();
             }
 
-            ToDoItemDTO = await _toDoService.GetByIdAsync(id.Value);
+            ToDoItemDTO = await _toDoService.GetTodoById(id.Value);
 
             if (ToDoItemDTO == null)
             {
@@ -51,7 +52,7 @@ namespace DeloitteTODO.Pages.ToDoList
 
             try
             {
-                await _toDoService.UpdateAsync(ToDoItemDTO);
+                await _toDoService.UpdateTodo(ToDoItemDTO);
             }
             catch (DbUpdateConcurrencyException)
             {
