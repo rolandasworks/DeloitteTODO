@@ -15,7 +15,7 @@
 - [ ] WebAPI
 
 
-due to time frame, the last three items were not added into project. 
+Due to lack of time, the last three items were not added into project. 
 
 Please let me know if you would like to those and I will update my project
 
