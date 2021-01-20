@@ -15,6 +15,7 @@
 - [ ] WebAPI
 
 
-please let me know if you would like to see missing items and I will update my project
+due to time frame, the last three items were not added into project. 
+Please let me know if you would like to those and I will update my project
 
 
