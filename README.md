@@ -1,18 +1,20 @@
 # DeloitteTODO
 
 
-.NET Core, Razor Pages
+- [x] .NET Core, Razor Pages
+- [x] Clean Architecture Design (Onion)
+- [x] Repositories, Unit of work
+- [x] Code First Migration
+- [x] Microsoft identity
+- [x] DI
+- [x] DTO
+- [x] LINQ
+- [x] NUnit, MOQ
+- [ ] Error Handling
+- [ ] Logging
+- [ ] WebAPI
 
-Clean Architecture Design (Onion)
 
-Repositories, Unit of work
+please let me know if you would like to see missing items and I will update my project
 
-Code First Migration
 
-Microsoft identity
-
-DI
-
-DTO
-
-NUnit, MOQ
