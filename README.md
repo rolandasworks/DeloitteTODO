@@ -1,4 +1,4 @@
-# DeloitteTODO
+# Deloitte TODO
 
 
 - [x] .NET Core, Razor Pages
